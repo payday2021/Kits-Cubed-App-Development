@@ -10,7 +10,7 @@ import {
 import AppButton from '../components/Button';
 import Input from '../components/Input';
 
-export default HomeScreen = ({ navigation }) => {
+export default SignInScreen = ({ navigation }) => {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
 
