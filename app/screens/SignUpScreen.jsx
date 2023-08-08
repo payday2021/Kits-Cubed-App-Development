@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import AppButton from '../components/Button';
 import Input from '../components/Input';
 
-export default SignUpScreen = ({ navigation }) => {
+const SignUpScreen = ({ navigation }) => {
   const [name, onChangeName] = useState('');
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
@@ -61,3 +61,5 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width
   }
 });
+
+export default SignUpScreen;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-export default Logo = () => {
+const Logo = () => {
   return (
     <Image
       source={require('../assets/logo.png')}
@@ -17,3 +17,5 @@ const styles = StyleSheet.create({
     margin: 20
   }
 });
+
+export default Logo;
