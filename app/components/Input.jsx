@@ -4,13 +4,7 @@ import { styled } from 'nativewind';
 
 const StyledTextInput = styled(TextInput, 'border rounded-xl p-2 m-1');
 
-export default function AppButton({
-  type,
-  secureTextEntry,
-  placeholder,
-  onChangeText,
-  value
-}) {
+const Input = ({ type, secureTextEntry, placeholder, onChangeText, value }) => {
   return (
     <StyledTextInput
       type={type}
@@ -22,4 +16,6 @@ export default function AppButton({
       autoCapitalize={'none'}
     ></StyledTextInput>
   );
-}
+};
+
+export default Input;

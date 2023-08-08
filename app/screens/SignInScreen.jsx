@@ -10,7 +10,7 @@ import {
 import AppButton from '../components/Button';
 import Input from '../components/Input';
 
-export default SignInScreen = ({ navigation }) => {
+const SignInScreen = ({ navigation }) => {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
 
@@ -37,7 +37,7 @@ export default SignInScreen = ({ navigation }) => {
           title="Sign In"
           onPress={() => navigation.push('Dashboard')}
         />
-        <AppButton title="Sign Up" onPress={() => navigation.push('SignUp')} />
+        <AppButton title="Sign Up" onPress={() => navigation.push('Sign Up')} />
       </View>
     </SafeAreaView>
   );
@@ -52,3 +52,5 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width
   }
 });
+
+export default SignInScreen;
