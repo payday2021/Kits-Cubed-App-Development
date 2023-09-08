@@ -6,11 +6,15 @@ import {
   Dimensions
 } from 'react-native';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { signUp } from '../features/auth/authSlice';
 
 import AppButton from '../components/Button';
 import Input from '../components/Input';
 
 const SignUpScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const [name, onChangeName] = useState('');
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
@@ -44,7 +48,11 @@ const SignUpScreen = ({ navigation }) => {
         <View>
           <AppButton
             title="Sign Up"
-            onPress={() => navigation.push('Dashboard')}
+            onPress={() => {
+              dispatch(
+                signUp({ name: name, email: email, password: password })
+              );
+            }}
           />
         </View>
       </View>

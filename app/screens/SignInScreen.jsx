@@ -7,10 +7,15 @@ import {
   Dimensions
 } from 'react-native';
 
+import { useDispatch } from 'react-redux';
+import { signIn } from '../features/auth/authSlice';
+
 import AppButton from '../components/Button';
 import Input from '../components/Input';
 
 const SignInScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
 
@@ -33,9 +38,15 @@ const SignInScreen = ({ navigation }) => {
         />
       </View>
       <View>
-        <AppButton
+        {/* <AppButton
           title="Sign In"
           onPress={() => navigation.push('Dashboard')}
+        /> */}
+        <AppButton
+          title="Sign In"
+          onPress={() => {
+            dispatch(signIn({ email: email, password: password }));
+          }}
         />
         <AppButton title="Sign Up" onPress={() => navigation.push('Sign Up')} />
       </View>
