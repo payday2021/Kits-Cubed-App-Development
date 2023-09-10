@@ -18,7 +18,8 @@ router.post('/auth/login', function (req, res) {
   try {
     res.send(users.userSignIn(req.body));
   } catch (error) {
-    console.error('ERROR LOGGING IN', error.message);
+    console.error('ERROR LOGGING IN: \n', error.code + ' ' + error.message);
+    res.status(error.code).send(error.message);
   }
 });
 
@@ -26,7 +27,8 @@ router.post('/auth/register', function (req, res) {
   try {
     res.send(users.userSignUp(req.body));
   } catch (error) {
-    console.error('ERROR REGISTERING', error);
+    console.error('ERROR REGISTERING \n', error.code + ' ' + error.message);
+    res.status(error.code).send(error.message);
   }
 });
 

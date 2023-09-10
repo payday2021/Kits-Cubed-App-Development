@@ -37,9 +37,12 @@ function userSignUp(user) {
       }
     };
   } else {
-    // TODO: user already exists exception
-    console.log('USER EXISTS');
-    return;
+    const emailInUseException = new Error(
+      'Email already in use: user already exists.'
+    );
+    emailInUseException.code = 409;
+
+    throw emailInUseException;
   }
 }
 
@@ -47,9 +50,12 @@ function userSignUp(user) {
 function userSignIn(user) {
   const userInfo = getUserFromDatabase(user.email);
   if (!userInfo) {
-    // TODO: user does not exist exception
-    console.log('USER DOES NOT EXIST');
-    return;
+    const invalidEmailException = new Error(
+      'Invalid email: user does not exist.'
+    );
+    invalidEmailException.code = 404;
+
+    throw invalidEmailException;
   } else {
     if (verifyUserPassword(user.password, userInfo.pass_hash)) {
       return {
@@ -61,9 +67,12 @@ function userSignIn(user) {
         }
       };
     } else {
-      // TODO: invalid password exception
-      console.log('INCORRECT PASSWORD');
-      return;
+      const invalidPasswordException = new Error(
+        'Invalid password: could not validate credentials.'
+      );
+      invalidPasswordException.code = 401;
+
+      throw invalidPasswordException;
     }
   }
 }
