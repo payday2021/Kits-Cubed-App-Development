@@ -1,26 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
+  Text,
   View,
   StatusBar,
   Dimensions
 } from 'react-native';
 
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { signIn } from '../features/auth/authSlice';
 
 import AppButton from '../components/Button';
 import Input from '../components/Input';
 
-const SignInScreen = ({ navigation }) => {
+const SignInScreen = (props) => {
   const dispatch = useDispatch();
 
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
 
+  useEffect(() => {
+    if (props.status === 'fulfilled') {
+      props.navigation.push('Dashboard');
+    }
+  });
+
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.errorText}>{props.error !== '' && props.error}</Text>
       <View>
         <Input
           type="email"
@@ -48,7 +56,10 @@ const SignInScreen = ({ navigation }) => {
             dispatch(signIn({ email: email, password: password }));
           }}
         />
-        <AppButton title="Sign Up" onPress={() => navigation.push('Sign Up')} />
+        <AppButton
+          title="Sign Up"
+          onPress={() => props.navigation.push('Sign Up')}
+        />
       </View>
     </SafeAreaView>
   );
@@ -61,7 +72,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: StatusBar.currentHeight,
     width: Dimensions.get('screen').width
+  },
+  errorText: {
+    color: 'red'
   }
 });
 
-export default SignInScreen;
+const mapStateToProps = (state) => {
+  return { status: state.auth.status, error: state.auth.error };
+};
+
+export default connect(mapStateToProps)(SignInScreen);
