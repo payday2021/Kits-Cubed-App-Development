@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,7 +6,7 @@ import {
   StatusBar,
   Dimensions
 } from 'react-native';
-
+import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { signIn } from '../features/auth/authSlice';
 
@@ -24,7 +23,7 @@ const SignInScreen = (props) => {
     if (props.status === 'fulfilled') {
       props.navigation.push('Dashboard');
     }
-  });
+  }, [props.status]);
 
   return (
     <SafeAreaView style={styles.container}>

@@ -52,14 +52,14 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(signIn.fulfilled, (state, action) => {
-        state.status = 'Logged in!';
+        state.status = 'fulfilled';
         state.error = '';
         state.name = action.payload.user.name;
         state.email = action.payload.user.email;
         state.token = action.payload.token;
       })
       .addCase(signIn.pending, (state, action) => {
-        state.status = 'Loading...';
+        state.status = 'pending';
       })
       .addCase(signIn.rejected, (state, action) => {
         state.status = 'rejected';
@@ -68,14 +68,14 @@ const authSlice = createSlice({
         } else state.error = 'Server Error';
       })
       .addCase(signUp.fulfilled, (state, action) => {
-        state.status = 'Signed up!';
+        state.status = 'fulfilled';
         state.error = '';
         state.name = action.payload.user.name;
         state.email = action.payload.user.email;
         state.token = action.payload.token;
       })
       .addCase(signUp.pending, (state, action) => {
-        state.status = 'Loading...';
+        state.status = 'pending';
       })
       .addCase(signUp.rejected, (state, action) => {
         state.status = 'rejected';

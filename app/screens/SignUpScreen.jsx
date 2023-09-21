@@ -24,7 +24,7 @@ const SignUpScreen = (props) => {
     if (props.status === 'fulfilled') {
       props.navigation.push('Dashboard');
     }
-  });
+  }, [props.status]);
 
   return (
     <SafeAreaView style={styles.container}>
