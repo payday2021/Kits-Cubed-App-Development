@@ -4,7 +4,6 @@ import axios from '../../api/axios';
 export const getKits = createAsyncThunk('fetchKits', async () => {
   try {
     const res = await axios.get('/kits/all');
-    // console.log(res.data);
     return res.data;
   } catch (error) {
     console.log(error.json());
@@ -29,7 +28,6 @@ const kitsSlice = createSlice({
       .addCase(getKits.fulfilled, (state, action) => {
         state.status = 'fulfilled';
         state.list = action.payload.kits;
-        console.log('LIST SET', action.payload.kits);
       })
       .addCase(getKits.pending, (state, action) => {
         state.status = 'pending';

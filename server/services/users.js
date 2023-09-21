@@ -140,7 +140,6 @@ function addUserToDatabase(user) {
                     VALUES (?,?,?,?)`;
 
   const result = db.run(ADD_USER, [user.name, user.email, hash, salt]);
-  console.log('ADD USER:', result);
 
   return result;
 }
