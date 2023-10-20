@@ -48,6 +48,7 @@ function userSignUp(user) {
 
 // validates user credentials and returns their JWT auth token
 function userSignIn(user) {
+  createUsersTokensTables();
   const userInfo = getUserFromDatabase(user.email);
   if (!userInfo) {
     const invalidEmailException = new Error(
@@ -101,6 +102,7 @@ function createUsersTokensTables() {
 }
 
 function getUserFromDatabase(email) {
+  createUsersTokensTables();
   const GET_USER = `SELECT 
                     users.id,
                     users.name,
@@ -118,6 +120,7 @@ function getUserFromDatabase(email) {
 }
 
 function addTokenToDatabase(id, token) {
+  createUsersTokensTables();
   const ADD_TOKEN = `INSERT INTO tokens(
                     user_id, 
                     token)
@@ -129,6 +132,7 @@ function addTokenToDatabase(id, token) {
 }
 
 function addUserToDatabase(user) {
+  createUsersTokensTables();
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(user.password, salt);
 
