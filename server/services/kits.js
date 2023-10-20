@@ -8,21 +8,24 @@ function createKitsTable() {
   const CREATE_KITS_TABLE = `CREATE TABLE IF NOT EXISTS kits(
                               id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                               name TEXT NOT NULL,
-                              desc TEXT NOT NULL
+                              desc TEXT NOT NULL,
+                              typeK TEXT CHECK (typeK in ('electricity', 'mechanics'))
                             )`;
 
-  db.run(CREATE_KITS_TABLE);
+  db.run(CREATE_KITS_TABLE, []);
 }
 
 function insertKit(kitObj) {
-  const INSERT_KIT = `INSERT INTO kits(name, desc) VALUES (?, ?)`;
-  const { name, desc } = kitObj;
+  createKitsTable();
+  const INSERT_KIT = `INSERT INTO kits(name, desc, typeK) VALUES (?, ?, ?)`;
+  const { name, desc, typeK } = kitObj;
 
-  const result = db.run(INSERT_KIT, [name, desc]);
+  const result = db.run(INSERT_KIT, [name, desc, typeK]);
   return result;
 }
 
 function deleteKitById(id) {
+  createKitsTable();
   const DELETE_KIT_BY_ID = `DELETE FROM kits WHERE id = ?`;
 
   const result = db.run(DELETE_KIT_BY_ID, [id]);
@@ -30,6 +33,7 @@ function deleteKitById(id) {
 }
 
 function updateKitById(id, kitObj) {
+  createKitsTable();
   const UPDATE_KIT_NAME_BY_ID = `UPDATE kits SET name = ?, desc = ? WHERE id = ?`;
   const { name, desc } = kitObj;
 
@@ -38,6 +42,7 @@ function updateKitById(id, kitObj) {
 }
 
 function getAllKits() {
+  createKitsTable();
   const GET_ALL_KITS = `SELECT * FROM kits`;
 
   const kits = db.query(GET_ALL_KITS, []);
