@@ -6,6 +6,7 @@ import SignInScreen from './app/screens/SignInScreen';
 import SignUpScreen from './app/screens/SignUpScreen';
 import DashboardScreen from './app/screens/DashboardScreen';
 import store from './app/store';
+import TabBar from './app/tabbar/tabBar';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,10 +19,17 @@ export default function App() {
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="Sign In" component={SignInScreen} />
-          <Stack.Screen name="Dashboard" component={DashboardScreen} />
           <Stack.Screen name="Sign Up" component={SignUpScreen} />
+          <Stack.Screen name="Tabs" component={TabBar} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
+
+    // <Provider store = {store}>
+    //   <NavigationContainer>
+    //     <TabBar /> {/* Render your tab navigator */}
+    //   </NavigationContainer>
+    // </Provider>
+
   );
 }

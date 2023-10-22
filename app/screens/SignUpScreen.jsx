@@ -22,7 +22,7 @@ const SignUpScreen = (props) => {
 
   useEffect(() => {
     if (props.status === 'fulfilled') {
-      props.navigation.push('Dashboard');
+      props.navigation.push('Tabs');
     }
   }, [props.status]);
 
