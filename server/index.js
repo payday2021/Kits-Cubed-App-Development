@@ -6,6 +6,7 @@ const app = express();
 const kitsRouter = require('./routes/kits');
 const usersRouter = require('./routes/users');
 const ordersRoutes = require('./routes/orders')
+const paymentsRoutes = require('./routes/payments')
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -13,6 +14,7 @@ app.use(bodyParser.json());
 app.use('/kits', kitsRouter);
 app.use('/users', usersRouter);
 app.use('/orders', ordersRoutes)
+app.use('/payments', paymentsRoutes);
 //
 
 app.get('/', (req, res) => {
