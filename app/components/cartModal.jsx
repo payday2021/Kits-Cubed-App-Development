@@ -16,16 +16,14 @@ export const CartModal = ({visible, onClose}) => {
     console.log(totalSum)
 
     const onPlaceOrderPressed = async () => {
-        const orderDetails = {
-            order_desc: "random desc"
-        }
+        const order_id = nanoid();
         dispatch(
             orderAdded({
-                id: nanoid(),
+                id: order_id,
                 cart: cart
             })
         )
-        addNewOrder({order_desc: 'random', order_items: cart})
+        addNewOrder({order_desc: 'random', order_items: cart, order_id: order_id})
         // try{
         //     await addNewOrder(orderDetails).unwrap()
         // } catch(err) {

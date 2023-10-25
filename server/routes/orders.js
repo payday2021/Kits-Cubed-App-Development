@@ -27,4 +27,15 @@ router.get('/all', (req,res) => {
   } 
 })
 
+//route to delete ordersTable (ONLY FOR TESTING PURPOSES)
+// DO NOT USE WHEN LIVE!!!!!!
+router.delete('/all/delete', (req, res) => {
+  try {
+    res.json(orders.deleteOrdersTable());
+    console.log("DELETED ORDERS TABLE")
+  } catch (error) {
+    console.error(':( ERROR DELETING ALL ORDERS', error.message);
+  } 
+})
+
 module.exports = router;

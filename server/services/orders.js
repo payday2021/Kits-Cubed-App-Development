@@ -25,14 +25,31 @@ function createOrdersTable() {
 function insertOrder(orderObj) {
     createOrdersTable();
     const INSERT_ORDER = `INSERT INTO orders(order_desc) VALUES (?)`;
-    const { order_desc, order_items } = orderObj;
-    //console.log(order_items)
+    const { order_desc, order_items, order_id } = orderObj;
+    console.log(order_id)
     const result = db.run(INSERT_ORDER, [order_desc]);
     return result;
 }
 
 function deleteOrderByID() {
 
+}
+
+function deleteOrdersTable() {
+  const DROP_ORDERS_TABLE = `DROP TABLE IF EXISTS orders`;
+
+  db.run(DROP_ORDERS_TABLE, [], function (err) {
+    if (err) {
+      console.error('Error dropping orders table:', err.message);
+    } else {
+      console.log('Orders table dropped successfully (if it existed).');
+    }
+
+    // Call the callback function when done
+    if (typeof callback === 'function') {
+      callback(err);
+    }
+  });
 }
 
 function getAllOrders() {
@@ -47,5 +64,6 @@ module.exports = {
     createOrdersTable,
     insertOrder,
     getAllOrders,
+    deleteOrdersTable
 }
 
