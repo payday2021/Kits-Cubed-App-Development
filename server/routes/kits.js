@@ -22,6 +22,16 @@ router.get('/all', function (req, res) {
   }
 });
 
+//route to delete kits table (ONLY FOR TESTING PURPOSES)
+router.delete('/all/delete', (req, res) => {
+  try {
+    res.json(kits.deleteKitsTable());
+    console.log("DELETED KITS TABLE")
+  } catch (error) {
+    console.error(':( ERROR DELETING ALL KITS', error.message);
+  } 
+})
+
 router.post('/add', function (req, res) {
   try {
     res.json(kits.insertKit(req.body));

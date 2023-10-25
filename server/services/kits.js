@@ -9,6 +9,7 @@ function createKitsTable() {
                               id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                               name TEXT NOT NULL,
                               desc TEXT NOT NULL,
+                              price INTEGER NOT NULL,
                               typeK TEXT CHECK (typeK in ('electricity', 'mechanics'))
                             )`;
 
@@ -17,10 +18,10 @@ function createKitsTable() {
 
 function insertKit(kitObj) {
   createKitsTable();
-  const INSERT_KIT = `INSERT INTO kits(name, desc, typeK) VALUES (?, ?, ?)`;
-  const { name, desc, typeK } = kitObj;
+  const INSERT_KIT = `INSERT INTO kits(name, desc, price, typeK) VALUES (?, ?, ?, ?)`;
+  const { name, desc, price, typeK } = kitObj;
 
-  const result = db.run(INSERT_KIT, [name, desc, typeK]);
+  const result = db.run(INSERT_KIT, [name, desc, price, typeK]);
   return result;
 }
 
@@ -49,10 +50,28 @@ function getAllKits() {
   return { kits };
 }
 
+function deleteKitsTable() {
+  const DROP_KITS_TABLE = `DROP TABLE IF EXISTS kits`;
+
+  db.run(DROP_KITS_TABLE, [], function (err) {
+    if (err) {
+      console.error('Error dropping kits table:', err.message);
+    } else {
+      console.log('kits table dropped successfully (if it existed).');
+    }
+
+    // Call the callback function when done
+    if (typeof callback === 'function') {
+      callback(err);
+    }
+  });
+}
+
 module.exports = {
   createKitsTable,
   insertKit,
   deleteKitById,
   updateKitById,
-  getAllKits
+  getAllKits,
+  deleteKitsTable
 };

@@ -29,6 +29,7 @@ export const KitModal = ({visible, onClose, kit}) => {
             <View>
                 <Text> hey </Text>
                 <Text>{kit.desc}</Text>
+                <Text>{kit.price}</Text>
                 <Button title = "Increment" onPress = {() => setCounter(counter + 1)}/>
                 <Text> {counter}</Text>
                 <Button title = "Decrement" onPress = {() => counter > 0 && setCounter(counter-1)}/>
