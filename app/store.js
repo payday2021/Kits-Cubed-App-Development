@@ -6,15 +6,16 @@ import authReducer from './features/auth/authSlice';
 import kitsReducer from './features/kits/kitsSlice';
 import cartReducer from './features/cart/cartSlice';
 import ordersReducer from './features/orders/ordersSlice';
+import { apiSlice } from './features/api/apiSlice';
 
 import { loadState, saveState } from '../localStorage';
 
-const rootReducer = combineReducers({
-  auth: authReducer,
-  kits: kitsReducer,
-  cart: cartReducer,
-  orders: ordersReducer,
-})
+// const rootReducer = combineReducers({
+//   auth: authReducer,
+//   kits: kitsReducer,
+//   cart: cartReducer,
+//   orders: ordersReducer,
+// })
 
 const persistedState = loadState();
 
@@ -22,8 +23,17 @@ const persistedState = loadState();
 
 
 const store = configureStore({
-  reducer: rootReducer,
-
+  reducer: {
+     auth: authReducer,
+     kits: kitsReducer,
+     cart: cartReducer,
+     orders: ordersReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer
+  },
+  middleware: getDefaultMiddleware =>
+  getDefaultMiddleware().concat(apiSlice.middleware),
+    
+  
     // auth: authReducer,
     // kits: kitsReducer,
     // cart: cartReducer

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { connect, useDispatch } from 'react-redux';
 import { getKits } from '../features/kits/kitsSlice';
-import axios from '../api/axios';
+import { useGetKitsQuery } from '../features/api/apiSlice';
 import AppButton from '../components/Button';
 import { KitsList } from '../features/kits/KitsList';
 import { CartModal }  from '../components/cartModal';
@@ -20,7 +20,6 @@ const DashboardScreen = (props) => {
   const dispatch = useDispatch();
   const [list, setList] = useState([]);
   const [cartModalIsVisible, setCartModalIsVisible] = useState(false);
-
 
 
   useEffect(() => {

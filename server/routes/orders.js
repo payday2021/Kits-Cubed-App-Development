@@ -10,6 +10,7 @@ router.get('/', (req,res) => {
 })
 
 router.post('/add', function(req, res) {
+    console.log('made it to /add')
     try {
         res.json(orders.insertOrder(req.body));
       } catch (error) {

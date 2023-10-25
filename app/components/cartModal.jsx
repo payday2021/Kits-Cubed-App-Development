@@ -4,25 +4,35 @@ import { View, Text, ScrollView, Button, Modal } from 'react-native'
 import { orderAdded } from '../features/orders/ordersSlice'
 import { emptyCart } from '../features/cart/cartSlice'
 import { nanoid } from '@reduxjs/toolkit'
+import { useAddNewOrderMutation } from '../features/api/apiSlice'
 
 export const CartModal = ({visible, onClose}) => {
     const cart = useSelector(state => state.cart)
+    const [addNewOrder] = useAddNewOrderMutation();
 
     const dispatch = useDispatch()
 
     const totalSum = cart.reduce((accumulator, item) => accumulator + item.price * item.quantity, 0)
     console.log(totalSum)
 
-    const onPlaceOrderPressed = () => {
+    const onPlaceOrderPressed = async () => {
+        const orderDetails = {
+            order_desc: "random desc"
+        }
         dispatch(
             orderAdded({
                 id: nanoid(),
                 cart: cart
             })
         )
-       // const order = useSelector(state => state.orders)
-       // console.log(order)
-        //console.log("order placed")
+        addNewOrder({order_desc: 'random', order_items: cart})
+        // try{
+        //     await addNewOrder(orderDetails).unwrap()
+        // } catch(err) {
+        //     console.error('fauked to send order: ', err)
+        // }
+
+
     }
 
     const onEmptyCartPressed = () => {

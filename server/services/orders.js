@@ -25,7 +25,8 @@ function createOrdersTable() {
 function insertOrder(orderObj) {
     createOrdersTable();
     const INSERT_ORDER = `INSERT INTO orders(order_desc) VALUES (?)`;
-    const { order_desc } = orderObj;
+    const { order_desc, order_items } = orderObj;
+    //console.log(order_items)
     const result = db.run(INSERT_ORDER, [order_desc]);
     return result;
 }
