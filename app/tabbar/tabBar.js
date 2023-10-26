@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import DashboardScreen from "../screens/DashboardScreen";
 import EventsScreen from "../screens/EventsScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -12,6 +13,7 @@ const TabBar = () => {
             }}>
             <Tab.Screen name = "DashboardScreen" component = {DashboardScreen}/>
             <Tab.Screen name = "Events" component = {EventsScreen}/>
+            <Tab.Screen name = "Profile" component = {ProfileScreen}/>
         </Tab.Navigator>
     )
 }

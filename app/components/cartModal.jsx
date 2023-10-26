@@ -45,7 +45,6 @@ export const CartModal = ({visible, onClose}) => {
                 {cart.map((order) => {
                     return (
                     <View key = {order.id}>
-                        <Text>{order.id}</Text>
                         <Text>{order.name}</Text>
                         <Text>price: {order.price}</Text>
                         <Text>quantity: {order.quantity}</Text>
