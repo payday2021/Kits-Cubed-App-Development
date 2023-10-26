@@ -15,13 +15,18 @@ export const KitModal = ({visible, onClose, kit}) => {
                 kitAdded({
                     id: nanoid(),
                     name: kit.name,
-                    price: 9,
+                    price: kit.price,
                     quantity: counter
                 })
             )
 
             setCounter(0);
         }
+    }
+
+    const closeButtonPressed = () => {
+        setCounter(0);
+        onClose(0);
     }
 
     return (
@@ -35,7 +40,7 @@ export const KitModal = ({visible, onClose, kit}) => {
                 <Button title = "Decrement" onPress = {() => counter > 0 && setCounter(counter-1)}/>
                 {/* when pressing add to cart, redux store should update cart */}
                 <Button title = "Add to Cart" onPress = {onAddToCartPressed}/>
-                <Button title = "Close Desc" onPress = {onClose}/>
+                <Button title = "Close Desc" onPress = {closeButtonPressed}/>
             </View>
         </Modal>
     );

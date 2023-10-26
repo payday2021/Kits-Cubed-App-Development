@@ -37,6 +37,10 @@ const DashboardScreen = (props) => {
     setList(filteredData)
   };
 
+  const clearLocalStorage = () => {
+    localStorage.clear();
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Text>Dashboard</Text>
@@ -58,6 +62,7 @@ const DashboardScreen = (props) => {
         </View>
       </ScrollView>
       <Button title = 'view cart' onPress = {() => setCartModalIsVisible(true)}/> 
+      <Button title = 'clear localStorage (testing only)' onPress = {clearLocalStorage}/>
       <CartModal visible = {cartModalIsVisible} onClose={() => setCartModalIsVisible(null)}/>
     </SafeAreaView>
   );
