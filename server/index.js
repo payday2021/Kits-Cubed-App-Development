@@ -7,6 +7,7 @@ const kitsRouter = require('./routes/kits');
 const usersRouter = require('./routes/users');
 const ordersRoutes = require('./routes/orders')
 const paymentsRoutes = require('./routes/payments')
+const eventsRoutes = require('./routes/events')
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -15,6 +16,7 @@ app.use('/kits', kitsRouter);
 app.use('/users', usersRouter);
 app.use('/orders', ordersRoutes)
 app.use('/payments', paymentsRoutes);
+app.use('/events', eventsRoutes);
 //
 
 app.get('/', (req, res) => {
