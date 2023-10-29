@@ -22,6 +22,8 @@ const ProfileScreen = () => {
                                 {order.cart.map((cart) => (
                                     <View key={cart.id}>
                                     <Text>{cart.name}</Text>
+                                    <Text>{cart.price}</Text>
+                                    <Text>{cart.quantity}</Text>
                                     </View>
                                 ))}
                             </View>

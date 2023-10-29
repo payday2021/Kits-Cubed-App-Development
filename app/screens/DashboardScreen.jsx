@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { connect, useDispatch } from 'react-redux';
 import { getKits } from '../features/kits/kitsSlice';
-import { useGetKitsQuery } from '../features/api/apiSlice';
 import AppButton from '../components/Button';
 import { KitsList } from '../features/kits/KitsList';
 import { CartModal }  from '../components/cartModal';

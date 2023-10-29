@@ -17,11 +17,13 @@ export const apiSlice = createApi({
                 body: initialOrder
             })
         }),
-        getKits: builder.query({
-            query: () => '/kits/all'
+        getEvents: builder.query({
+            query: () => '/events/all',
         })
     })
 })
 
-export const {useAddNewOrderMutation,
-useGetKitsQuery} = apiSlice;
+export const {
+    useAddNewOrderMutation,
+    useGetEventsQuery,
+} = apiSlice;

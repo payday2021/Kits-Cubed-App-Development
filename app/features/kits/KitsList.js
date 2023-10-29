@@ -7,8 +7,6 @@ export const KitsList = ( props ) => {
     const [visibleModalID, setVisibleModalID] = useState(null)
 
 
-
-
     return (
         <ScrollView>
         <View>
