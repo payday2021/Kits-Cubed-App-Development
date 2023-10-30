@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
-
+import { EventModal } from '../components/eventModal';
 import { useGetEventsQuery } from '../features/api/apiSlice';
+import { useState } from 'react';
 
 
 const EventsScreen = () => {
+    const [visibleModalID, setVisibleModalID] = useState(null);
     const {
         data: events,
         isLoading,
@@ -28,7 +30,17 @@ const EventsScreen = () => {
                 <View key = {event.id}>
                     <Text>{event.name}</Text>
                     <Text>{event.desc}</Text>
-                    <Button title = "Join"/>
+                {event && (
+                    <EventModal
+                    visible={event.id === visibleModalID}
+                    onClose={() => setVisibleModalID(null)}
+                    event={event}
+                    />
+                )}
+                    <Button 
+                        title = "Join"
+                        onPress = {()=> setVisibleModalID(event.id)}
+                    />
                 </View>
             )
         })
