@@ -56,6 +56,15 @@ router.post('/signup', function (req, res) {
     }
   });
 
+  router.get('/signup/confirmation', function (req, res) {
+    try {
+      res.send(events.isParticipantRegistered(req.body));
+    } catch (error) {
+      console.error(':( ERROR GETTING ALL EVENTS SIGNUPS', error.message);
+    }
+  });
+
+
 
 
 module.exports = router;

@@ -63,6 +63,19 @@ function getRegistrationsByEventId(event_id) {
   return db.query(GET_SIGNUPS_BY_EVENT_ID, [event_id]);
 }
 
+function isParticipantRegistered(eventSignupObj) {
+  createEventsSignupTable();
+  const CHECK_REGISTRATION = `
+    SELECT 1 FROM events_signup
+    WHERE event_id = ? AND participant = ?
+    LIMIT 1
+  `;
+  const { event_id, participant } = eventSignupObj;
+
+  const result = db.query(CHECK_REGISTRATION, [event_id, participant]);
+  return result.length > 0;
+}
+
 
 
 module.exports = {
@@ -71,5 +84,6 @@ module.exports = {
   getAllEvents,
   insertUserSignup,
   getAllRegistrations,
-  getRegistrationsByEventId
+  getRegistrationsByEventId,
+  isParticipantRegistered
 }
