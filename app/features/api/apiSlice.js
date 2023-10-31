@@ -19,6 +19,13 @@ export const apiSlice = createApi({
         }),
         getEvents: builder.query({
             query: () => '/events/all',
+        }),
+        eventSignup: builder.mutation({
+            query: signupInfo => ({
+                url: '/events/signup',
+                method: 'POST',
+                body: signupInfo
+            })
         })
     })
 })
@@ -26,4 +33,5 @@ export const apiSlice = createApi({
 export const {
     useAddNewOrderMutation,
     useGetEventsQuery,
+    useEventSignupMutation,
 } = apiSlice;
