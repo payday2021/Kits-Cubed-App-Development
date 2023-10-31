@@ -28,6 +28,34 @@ router.get('/all', function (req, res) {
       console.error(':( ERROR GETTING ALL EVENTS', error.message);
     }
   });
-  
+
+router.post('/signup', function (req, res) {
+    try {
+        res.json(events.insertUserSignup(req.body));
+        console.log("successfully signed up for event");
+        console.log(req.body)
+    } catch (error) {
+        console.error(':( ERROR SIGNING UP FOR EVENT', error.message);
+    }
+  });
+
+  router.get('/signup/all', function (req, res) {
+    try {
+      res.send(events.getAllRegistrations());
+    } catch (error) {
+      console.error(':( ERROR GETTING ALL EVENTS SIGNUPS', error.message);
+    }
+  });
+
+  router.get('/signup/all/:id', function (req, res) {
+    try {
+      const event_id = req.params.id;
+      res.send(events.getRegistrationsByEventId(event_id));
+    } catch (error) {
+      console.error(':( ERROR GETTING ALL EVENTS SIGNUPS BY ID', error.message);
+    }
+  });
+
+
 
 module.exports = router;
