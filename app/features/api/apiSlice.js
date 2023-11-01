@@ -8,6 +8,7 @@ export const apiSlice = createApi({
     reducerPath: 'api',
     // All of our requests will have URLs starting with '/fakeApi'
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+    tagTypes: ['Signups'],
     // The "endpoints" represent operations and requests for this server
     endpoints: builder => ({
         addNewOrder: builder.mutation({
@@ -20,13 +21,19 @@ export const apiSlice = createApi({
         getEvents: builder.query({
             query: () => '/events/all',
         }),
+        isUserRegistered: builder.query({
+            query: ({ event_id, participant }) => `/events/signup/confirmation?event_id=${event_id}&participant=${participant}`,
+            providesTags: ['Signups']
+        }),
         eventSignup: builder.mutation({
             query: signupInfo => ({
                 url: '/events/signup',
                 method: 'POST',
                 body: signupInfo
-            })
-        })
+            }),
+            invalidatesTags: ['Signups']
+        }),
+
     })
 })
 
@@ -34,4 +41,5 @@ export const {
     useAddNewOrderMutation,
     useGetEventsQuery,
     useEventSignupMutation,
+    useIsUserRegisteredQuery,
 } = apiSlice;
