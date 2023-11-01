@@ -56,13 +56,34 @@ router.post('/signup', function (req, res) {
     }
   });
 
+  // router.get('/signup/confirmation', function (req, res) {
+  //   try {
+  //     res.send(events.isParticipantRegistered(req.body));
+  //   } catch (error) {
+  //     console.error(':( ERROR GETTING ALL EVENTS SIGNUPS', error.message);
+  //   }
+  // });
+
   router.get('/signup/confirmation', function (req, res) {
     try {
-      res.send(events.isParticipantRegistered(req.body));
+      const { event_id, participant } = req.query;
+      const isRegistered = events.isParticipantRegistered(event_id, participant);
+      console.log(isRegistered)
+      res.send({ isRegistered });
     } catch (error) {
-      console.error(':( ERROR GETTING ALL EVENTS SIGNUPS', error.message);
+      console.error(':( ERROR CHECKING REGISTRATION STATUS', error.message);
+      res.status(500).send('Internal Server Error');
     }
   });
+
+  router.delete('/signup/all/delete', (req, res) => {
+    try {
+      res.json(events.deleteEventsSignupTable());
+      console.log("DELETED EVENTS_SIGNUP TABLE")
+    } catch (error) {
+      console.error(':( ERROR DELETING ALL SIGNUPS', error.message);
+    } 
+  })
 
 
 

@@ -63,17 +63,36 @@ function getRegistrationsByEventId(event_id) {
   return db.query(GET_SIGNUPS_BY_EVENT_ID, [event_id]);
 }
 
-function isParticipantRegistered(eventSignupObj) {
+function isParticipantRegistered(event_id, participant) {
   createEventsSignupTable();
   const CHECK_REGISTRATION = `
     SELECT 1 FROM events_signup
     WHERE event_id = ? AND participant = ?
     LIMIT 1
   `;
-  const { event_id, participant } = eventSignupObj;
+  //const { event_id, participant } = eventSignupObj;
+  console.log(event_id)
 
   const result = db.query(CHECK_REGISTRATION, [event_id, participant]);
+  //console.log(result.length)
   return result.length > 0;
+}
+
+function deleteEventsSignupTable() {
+  const DROP_EVENTS_SIGNUP_TABLE = `DROP TABLE IF EXISTS events_signup`;
+
+  db.run(DROP_EVENTS_SIGNUP_TABLE, [], function (err) {
+    if (err) {
+      console.error('Error dropping events_signup table:', err.message);
+    } else {
+      console.log('events_signup table dropped successfully (if it existed).');
+    }
+
+    // Call the callback function when done
+    if (typeof callback === 'function') {
+      callback(err);
+    }
+  });
 }
 
 
@@ -85,5 +104,6 @@ module.exports = {
   insertUserSignup,
   getAllRegistrations,
   getRegistrationsByEventId,
-  isParticipantRegistered
+  isParticipantRegistered,
+  deleteEventsSignupTable
 }
