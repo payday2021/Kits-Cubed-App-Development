@@ -1,8 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const kits = require('../services/kits');
+const kits = require('../services/tables');
 
 // TODO: success/error status codes + messages
+
+/**
+ * KIT TYPES
+ */
+
+router.get('/types/all', function (req, res) {
+  try {
+    res.send(kits.getAllKitTypes());
+  } catch (error) {
+    console.error(':( ERROR GETTING ALL KIT TYPES', error.message);
+  }
+});
+
+/**
+ * KITS
+ */
 
 router.get('/', function (req, res) {
   try {

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from '../../api/axios';
 
-export const getKits = createAsyncThunk('fetchKits', async () => {
+export const getAllKits = createAsyncThunk('fetchAllKits', async () => {
   try {
     const res = await axios.get('/kits/all');
     return res.data;
@@ -10,9 +10,19 @@ export const getKits = createAsyncThunk('fetchKits', async () => {
   }
 });
 
+export const getAllKitTypes = createAsyncThunk('fetchAllKitTypes', async () => {
+  try {
+    const res = await axios.get('/kits/types/all');
+    return res.data;
+  } catch (error) {
+    console.log(error.json());
+  }
+});
+
 const initState = {
+  types: [],
   list: [],
-  status: ''
+  status: '',
 };
 
 const kitsSlice = createSlice({
@@ -25,14 +35,24 @@ const kitsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getKits.fulfilled, (state, action) => {
+      .addCase(getAllKits.fulfilled, (state, action) => {
         state.status = 'fulfilled';
         state.list = action.payload.kits;
       })
-      .addCase(getKits.pending, (state, action) => {
+      .addCase(getAllKits.pending, (state, action) => {
         state.status = 'pending';
       })
-      .addCase(getKits.rejected, (state, action) => {
+      .addCase(getAllKits.rejected, (state, action) => {
+        state.status = 'rejected';
+      })
+      .addCase(getAllKitTypes.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.types = action.payload.types;
+      })
+      .addCase(getAllKitTypes.pending, (state, action) => {
+        state.status = 'pending';
+      })
+      .addCase(getAllKitTypes.rejected, (state, action) => {
         state.status = 'rejected';
       });
   }
