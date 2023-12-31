@@ -6,6 +6,7 @@ import authReducer from './features/auth/authSlice';
 import kitsReducer from './features/kits/kitsSlice';
 import cartReducer from './features/cart/cartSlice';
 import ordersReducer from './features/orders/ordersSlice';
+import eventsReducer from './features/events/eventsSlice';
 
 import { loadState, saveState } from '../localStorage';
 
@@ -14,29 +15,24 @@ const rootReducer = combineReducers({
   kits: kitsReducer,
   cart: cartReducer,
   orders: ordersReducer,
+  events: eventsReducer
 })
 
-const persistedState = loadState();
-
-
-
+// const persistedState = loadState();
 
 const store = configureStore({
   reducer: rootReducer,
-
-    // auth: authReducer,
-    // kits: kitsReducer,
-    // cart: cartReducer
-  preloadedState: persistedState,
+  // preloadedState: persistedState,
 });
 
-store.subscribe(() => {
-  saveState({
-    cart: store.getState().cart,
-    orders: store.getState().orders
-  });
-  console.log("state has changed")
-})
+// store.subscribe(() => {
+//   saveState({
+//     auth: store.getState().auth,
+//     cart: store.getState().cart,
+//     orders: store.getState().orders
+//   });
+//   // console.log("state has changed")
+// })
 
 export const useAppDispatch = () => useDispatch;
 
