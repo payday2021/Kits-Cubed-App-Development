@@ -3,15 +3,11 @@ const db = require('./db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-
-
 /**
  * USER AUTHENTICATION
  * TODO: move non-SQL functions to routes folder
  *       or move SQL functions to seperate DB "controller"
  */
-
-
 
 function createUsersAndTokensTables() {
   const CREATE_USERS_TABLE = `CREATE TABLE IF NOT EXISTS Users(
@@ -156,13 +152,9 @@ function verifyUserPassword(password, hash) {
   return bcrypt.compareSync(password, hash);
 }
 
-
-
 /**
  * KIT TYPES
  */
-
-
 
 function createKitTypesTable() {
   const CREATE_KIT_TYPES_TABLE = `CREATE TABLE IF NOT EXISTS KitTypes(
@@ -177,7 +169,7 @@ function populateKitTypesTable() {
   const INSERT_KIT_TYPE = `INSERT INTO KitTypes(KitTypeName) VALUES (?)`;
   const types = ['electricity', 'mechanics'];
 
-  for(const type of types) {
+  for (const type of types) {
     db.run(INSERT_KIT_TYPE, [type]);
   }
 }
@@ -190,15 +182,12 @@ function getAllKitTypes() {
   return { types };
 }
 
-
 /**
  * KITS
  */
 
-
-
 // function dropKitsTable() {
-  // const DROP_KITS_TABLE = 'DROP TABLE IF EXISTS kits';
+// const DROP_KITS_TABLE = 'DROP TABLE IF EXISTS kits';
 // }
 
 function createKitsTable() {
@@ -267,7 +256,101 @@ function getAllKitsByType(type) {
 //                             )`;
 // }
 
+/**
+ * EVENTS
+ */
 
+function createEventsTable() {
+  const CREATE_EVENTS_TABLE = `CREATE TABLE IF NOT EXISTS Events(
+                                EventID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                                EventName TEXT NOT NULL,
+                                EventDate DATE NOT NULL,
+                                EventDesc TEXT NOT NULL,
+                                EventLocation TEXT NOT NULL
+                              )`;
+
+  db.run(CREATE_EVENTS_TABLE, []);
+}
+function populateEventsTable() {
+  createUserEventTable();
+  const INSERT_EVENT = `INSERT INTO Events(
+                            EventName, 
+                            EventDate, 
+                            EventDesc, 
+                            EventLocation) 
+                            VALUES (?, ?, ?, ?)`;
+  const events = [
+    {
+      name: 'First Event!',
+      date: '2024-01-01',
+      desc: 'This is the first KitsCubed event!',
+      location: '123 Main St, Anytown USA'
+    },
+    {
+      name: 'Second Event!',
+      date: '2024-01-01',
+      desc: 'This is the second KitsCubed event!',
+      location: '123 Main St, Anytown USA'
+    }
+  ];
+
+  for (const event of events) {
+    db.run(INSERT_EVENT, [
+      event.name,
+      event.date,
+      event.desc,
+      event.location
+    ]);
+  }
+}
+
+function getAllEvents() {
+  createEventsTable();
+  const GET_ALL_EVENTS = `SELECT * FROM Events`;
+
+  const events = db.query(GET_ALL_EVENTS, []);
+  return { events };
+}
+
+// User-Event Table (for users who have signed up for events)
+
+function createUserEventTable() {
+  const CREATE_USER_EVENT_TABLE = `CREATE TABLE IF NOT EXISTS UserEvents(
+                                  UserID INTEGER NOT NULL,
+                                  EventID INTEGER NOT NULL,
+                                  FOREIGN KEY (UserID) REFERENCES Users(UserID),
+                                  FOREIGN KEY (EventID) REFERENCES Events(EventID)
+                                )`;
+
+  db.run(CREATE_USER_EVENT_TABLE, []);
+}
+
+function addUserToEvent(id, eventID) {
+  createUserEventTable();
+  const INSERT_USER_TO_EVENT = `INSERT INTO UserEvents(UserID, EventID) VALUES (?, ?)`;
+  
+  const result = db.run(INSERT_USER_TO_EVENT, [id, eventID]);
+  return { result };
+}
+
+function getUserEvents(id) {
+  createUserEventTable();
+  const GET_USER_EVENTS = `SELECT Events.EventID, 
+                                  Events.EventName, 
+                                  Events.EventDate, 
+                                  Events.EventDesc, 
+                                  Events.EventLocation
+                          FROM Events
+                          JOIN UserEvents ON Events.EventID = UserEvents.EventID
+                          WHERE UserEvents.UserID = ?`;
+  
+  const events = db.query(GET_USER_EVENTS, [id]);
+  return { events };
+}
+
+/**
+ * ORDERS
+ */
 
 function createOrdersTable() {
   const CREATE_ORDERS_TABLE = `CREATE TABLE IF NOT EXISTS orders(
@@ -276,17 +359,17 @@ function createOrdersTable() {
     )`;
 
   db.run(CREATE_ORDERS_TABLE, [], function (err) {
-      if (err) {
-        console.error('Error creating orders table:', err.message);
-      } else {
-        console.log('Orders table created successfully.');
-      }
-  
-      // Call the callback function when done
-      if (typeof callback === 'function') {
-        callback(err);
-      }
-    });
+    if (err) {
+      console.error('Error creating orders table:', err.message);
+    } else {
+      console.log('Orders table created successfully.');
+    }
+
+    // Call the callback function when done
+    if (typeof callback === 'function') {
+      callback(err);
+    }
+  });
   //console.log("made it here ")
 }
 
@@ -298,23 +381,21 @@ function insertOrder(orderObj) {
   return result;
 }
 
-function deleteOrderByID() {
-
-}
+function deleteOrderByID() {}
 
 function getAllOrders() {
   createOrdersTable();
   const GET_ALL_ORDERS = 'SELECT * FROM orders';
 
   const orders = db.query(GET_ALL_ORDERS, []);
-  return { orders }
+  return { orders };
 }
 
 module.exports = {
   userSignUp,
   userSignIn,
   addUserToDatabase,
-  
+
   getAllKitTypes,
 
   createKitsTable,
@@ -323,9 +404,13 @@ module.exports = {
   updateKitById,
   getAllKits,
   getAllKitsByType,
-  
+
+  createEventsTable,
+  getAllEvents,
+  addUserToEvent,
+  getUserEvents,
+
   createOrdersTable,
   insertOrder,
-  getAllOrders,
-}
-
+  getAllOrders
+};
