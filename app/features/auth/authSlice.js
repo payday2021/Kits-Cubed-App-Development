@@ -3,10 +3,11 @@ import axios from '../../api/axios';
 import { Axios, AxiosError } from 'axios';
 
 const initState = {
+  id: null,
   name: '',
   email: '',
-  status: '',
   token: '',
+  status: '',
   error: ''
 };
 
@@ -54,6 +55,7 @@ const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, action) => {
         state.status = 'fulfilled';
         state.error = '';
+        state.id = action.payload.user.id;
         state.name = action.payload.user.name;
         state.email = action.payload.user.email;
         state.token = action.payload.token;
@@ -70,6 +72,7 @@ const authSlice = createSlice({
       .addCase(signUp.fulfilled, (state, action) => {
         state.status = 'fulfilled';
         state.error = '';
+        state.id = action.payload.user.id;
         state.name = action.payload.user.name;
         state.email = action.payload.user.email;
         state.token = action.payload.token;
